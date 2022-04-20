@@ -1,5 +1,7 @@
-function createShip(){
-    console.log("Creating Ship");
+class Ship{
+    constructor(size){
+       console.log("This is a test")
+    }
 }
 
-module.exports = createShip;
+module.exports = Ship;
