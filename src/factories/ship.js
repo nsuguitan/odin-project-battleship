@@ -1,6 +1,6 @@
 class Ship{
     constructor(size){
-       console.log("This is a test")
+        this.size = size;
     }
 }
 
