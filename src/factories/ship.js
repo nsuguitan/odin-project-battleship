@@ -1,6 +1,12 @@
 class Ship{
-    constructor(size){
+    constructor(size,hits,position){
         this.size = size;
+        this.hits = hits;
+        this.position = position;
+    }
+
+    hit(loc){ 
+        return true;
     }
 }
 
