@@ -1,0 +1,41 @@
+{
+  "name": "odin-project-battleship",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "build": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nsuguitan/odin-project-battleship.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nsuguitan/odin-project-battleship/issues"
+  },
+  "homepage": "https://github.com/nsuguitan/odin-project-battleship#readme",
+  "devDependencies": {
+    "jest": "^27.5.1",
+    "webpack": "^5.72.0",
+    "webpack-cli": "^4.9.2"
+  },
+  "jest": {
+    "automock": false,
+    "moduleFileExtensions": [
+      "js",
+      "jsx"
+    ],
+    "moduleDirectories": [
+      "node_modules"
+    ],
+    "testEnvironment": "jsdom",
+    "roots": [
+      "./src/test"
+    ],
+    "testRegex": ".*.test.js",
+    "verbose": true
+  }
+}
