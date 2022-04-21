@@ -17,7 +17,7 @@ test('Ship hit',() =>{
     expect(destroyer.getHits()).toStrictEqual([[0,1]]);
 })
 
-test('Ship not sunk',() =>{
+test('Ship sunk',() =>{
     const destroyer = ship(3,[[0,0],[0,1],[0,2]]);
     destroyer.hit([0,0]);
     destroyer.hit([0,1]);
@@ -25,7 +25,7 @@ test('Ship not sunk',() =>{
     expect(destroyer.isSunk()).toStrictEqual(true);
 })
 
-test('Ship sunk',() =>{
+test('Ship not sunk',() =>{
     const destroyer = ship(3,[[0,0],[0,1],[0,2]]);
     expect(destroyer.isSunk()).toStrictEqual(false);
 })
