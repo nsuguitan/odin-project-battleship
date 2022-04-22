@@ -2,12 +2,20 @@ const ship = require('../factories/ship');
 
 const gameboardFactory = () => {
     const boardSize = 7;
-    const shipArray = [];
-    let board  = Array(boardSize).fill().map(() => Array(boardSize).fill(0));
+    let shipArray = [];
+    let board  = Array(boardSize).fill().map(() => Array(boardSize).fill(null));
     const getBoard = () => board;
-    const placeShip = (size,position) => {
-        shipArray.append(ship(size,row,col,isVertical));
+    const placeShip = (myShip,row,col,isVertical) => {
+        for (i=0; i < myShip.getSize(); i++){
+            if(isVertical){
+                board[row + i][col] = myShip;
+            }
+            else{
+                board[row][col + i] = myShip;
+            }
+            
+        }
     }
-    return{getBoard};
+    return{getBoard, placeShip};
 };
 module.exports = gameboardFactory;
