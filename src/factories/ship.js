@@ -1,7 +1,6 @@
-const shipFactory = (size,position) =>{
+const shipFactory = (size) =>{
     hits = [];
     const getSize = () => size;
-    const getPosition = () => position;
     const getHits = () => hits;
     const hit = (loc) => { 
         hits.push(loc) 
@@ -10,7 +9,7 @@ const shipFactory = (size,position) =>{
         if(hits.length === getSize()) {return true}
         else {return false}
     };
-    return {getSize, getPosition, getHits, hit, isSunk};
+    return {getSize, getHits, hit, isSunk};
     
 };
 
