@@ -70,7 +70,7 @@ test(' valid receive attack (trigger hit on ship object)', () => {
 test(' invalid receive attack (already attacked miss)', () => {
     const game = gameboard();
     game.receiveAttack(9,9);
-    expect(game.receiveAttack(9,9)).toEqual(false)
+    expect(game.receiveAttack(9,9)).toEqual(false);
 
 })
 

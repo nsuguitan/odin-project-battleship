@@ -45,11 +45,16 @@ const gameboardFactory = () => {
     }
 
     const receiveAttack = (row,col) => {
-        if(board[row][col] === null){
+        if(board[row][col] === null && missedAttack[row][col] === false){
             missedAttack[row][col] = true;
+            return true;
+        }
+        else if(missedAttack[row][col] === true){
+            return false;
         }
         else{
             board[row][col].hit((row,col))
+            return true;
         }
     }
 
