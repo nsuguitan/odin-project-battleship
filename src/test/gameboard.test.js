@@ -48,4 +48,26 @@ test('invalid ship location (collision)',() =>{
     const destroyer =  ship(3);
     game.placeShip(destroyer,3,3,true);
     expect(game.validPlacement(2,5,2,false)).toEqual(false);
+    expect(game.validPlacement(2,2,3,true)).toEqual(false);
+})
+
+test(' valid receive attack (no hit, miss array)', () => {
+    const game = gameboard();
+    game.receiveAttack(2,3);
+    expect(game.getMissedAttack()[2][3]).toEqual(true);
+
+})
+test(' valid receive attack (trigger hit on ship object)', () => {
+    const game = gameboard();
+
+})
+
+test(' invalid receive attack (already attacked miss)', () => {
+    const game = gameboard();
+
+})
+
+test(' invalid receive attack (already attacked hit)', () => {
+    const game = gameboard();
+
 })

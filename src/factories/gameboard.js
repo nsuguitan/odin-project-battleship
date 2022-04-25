@@ -3,6 +3,8 @@ const ship = require('../factories/ship');
 const gameboardFactory = () => {
     const boardSize = 10;
     let board  = Array(boardSize).fill().map(() => Array(boardSize).fill(null));
+    let missedAttack  = Array(boardSize).fill().map(() => Array(boardSize).fill(false));
+    const getMissedAttack = () => missedAttack;
     const getBoard = () => board;
     const placeShip = (myShip,row,col,isVertical) => {
         if(validPlacement(myShip.getSize(),row,col,isVertical)){
@@ -41,6 +43,11 @@ const gameboardFactory = () => {
         }
         return true;
     }
-    return{getBoard, placeShip, validPlacement};
+
+    const receiveAttack = (row,col) => {
+        missedAttack[row][col] = true;
+    }
+
+    return{getBoard, placeShip, validPlacement, getMissedAttack, receiveAttack};
 };
 module.exports = gameboardFactory;
