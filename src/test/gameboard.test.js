@@ -59,6 +59,11 @@ test(' valid receive attack (no hit, miss array)', () => {
 })
 test(' valid receive attack (trigger hit on ship object)', () => {
     const game = gameboard();
+    const destroyer =  ship(3);
+    game.placeShip(destroyer,1,3,true);
+    game.receiveAttack(2,3);
+    expect(game.getMissedAttack()[2][3]).toEqual(false);
+    expect(destroyer.getHits()).toEqual([(2,3)]);
 
 })
 
