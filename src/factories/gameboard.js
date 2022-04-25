@@ -49,13 +49,17 @@ const gameboardFactory = () => {
             missedAttack[row][col] = true;
             return true;
         }
-        else if(missedAttack[row][col] === true){
+        else if(missedAttack[row][col] === true ){
             return false;
         }
-        else{
+        else if(board[row][col]!== null){
+            if(board[row][col].getHits().includes((row,col))){
+                return false;
+            }
             board[row][col].hit((row,col))
             return true;
         }
+
     }
 
     return{getBoard, placeShip, validPlacement, getMissedAttack, receiveAttack};

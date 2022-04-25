@@ -76,5 +76,9 @@ test(' invalid receive attack (already attacked miss)', () => {
 
 test(' invalid receive attack (already attacked hit)', () => {
     const game = gameboard();
+    const destroyer =  ship(3);
+    game.placeShip(destroyer,1,3,true);
+    game.receiveAttack(2,3);
+    expect(game.receiveAttack(2,3)).toEqual(false);
 
 })
