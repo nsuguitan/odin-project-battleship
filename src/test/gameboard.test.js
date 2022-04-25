@@ -3,16 +3,49 @@ const ship = require('../factories/ship');
 
 test('Init gameboard',() =>{
     const game = gameboard();
-    expect(game.getBoard()).toStrictEqual(Array(7).fill().map(() => Array(7).fill(null)));
+    expect(game.getBoard()).toStrictEqual(Array(10).fill().map(() => Array(10).fill(null)));
 })
 
-test('place ship',() =>{
+test('place horizontal ship',() =>{
     const game = gameboard();
-    const destroyer =  ship(3,[[0,0],[0,1],[0,2]]);
+    const destroyer =  ship(3);
     game.placeShip(destroyer,0,0,false);
     expect(destroyer).toEqual(destroyer)
     expect(game.getBoard()[0][0]).toEqual(destroyer);
     expect(game.getBoard()[0][1]).toEqual(destroyer);
     expect(game.getBoard()[0][2]).toEqual(destroyer);
     expect(game.getBoard()[2][0]).toBe(null);
+})
+test('place vertical ship',() =>{
+    const game = gameboard();
+    const destroyer =  ship(3);
+    game.placeShip(destroyer,3,3,true);
+    expect(destroyer).toEqual(destroyer)
+    expect(game.getBoard()[3][3]).toEqual(destroyer);
+    expect(game.getBoard()[4][3]).toEqual(destroyer);
+    expect(game.getBoard()[5][3]).toEqual(destroyer);
+    expect(game.getBoard()[3][4]).toBe(null);
+})
+
+test('valid ship location',() =>{
+    const game = gameboard();
+    const destroyer =  ship(3);
+    ;
+    expect(game.placeShip(destroyer,3,3,true)).toEqual(true)
+    
+})
+
+test('invalid ship location (out of bounds)',() =>{
+    const game = gameboard();
+
+    expect(game.validPlacement(3,9,9,true)).toEqual(false)
+    expect(game.validPlacement(5,5,5,false)).toEqual(false)
+
+})
+
+test('invalid ship location (collision)',() =>{
+    const game = gameboard();
+    const destroyer =  ship(3);
+    game.placeShip(destroyer,3,3,true);
+    expect(game.validPlacement(2,5,2,false)).toEqual(false);
 })
