@@ -1,5 +1,5 @@
-const gameboard = require('../factories/gameboard');
-const ship = require('../factories/ship');
+let gameboard = require('../factories/gameboard');
+let ship = require('../factories/ship');
 
 test('Init gameboard',() =>{
     const game = gameboard();
@@ -63,7 +63,7 @@ test(' valid receive attack (trigger hit on ship object)', () => {
     game.placeShip(destroyer,1,3,true);
     game.receiveAttack(2,3);
     expect(game.getMissedAttack()[2][3]).toEqual(false);
-    expect(destroyer.getHits()).toEqual([[2,3]]);
+    expect(destroyer.getHits()).toEqual(expect.arrayContaining(["23"]));
 
 })
 
@@ -79,7 +79,10 @@ test(' invalid receive attack (already attacked hit)', () => {
     const destroyer =  ship(3);
     game.placeShip(destroyer,1,3,true);
     game.receiveAttack(2,3);
-    expect(destroyer.getHits()).toContainEqual([2,3])
+    expect(destroyer.getHits()).toEqual(expect.arrayContaining(["23"]))
+    expect(game.getBoard()[2][3]).toEqual(destroyer)
+    expect(game.getBoard()[2][3].getHits()).toEqual(expect.arrayContaining(["23"]))
+    expect(game.getBoard()[2][3].getHits().includes("23")).toEqual(true)
     expect(game.receiveAttack(2,3)).toEqual(false);
 
 })
@@ -90,8 +93,8 @@ test('All ships sunk', () => {
     const s2 =  ship(1);
     game.placeShip(s1,0,0,false);
     game.placeShip(s2,1,0,false);
-    s1.hit((0,0))
-    s2.hit((1,0))
+    s1.hit(0,0)
+    s2.hit(1,0)
     expect(game.allSunk()).toEqual(true)
 })
 test('All ships sunk', () => {
@@ -100,9 +103,9 @@ test('All ships sunk', () => {
     const s2 =  ship(1);
     game.placeShip(s1,0,0,false);
     game.placeShip(s2,1,0,false);
-    s1.hit((0,0))
-    expect(s1.getHits()).toStrictEqual([[0,0]])
-    expect(s2.getHits()).toEqual([[0,1]])
-    expect(s2.getHits()).toEqual([0])
+    s1.hit(0,0)
+    s2.hit(1,0)
+    expect(s1.getHits()).toEqual(expect.arrayContaining(["00"]))
+    expect(s2.getHits()).toEqual(expect.arrayContaining(["10"]))
     expect(game.allSunk()).toEqual(true)
 })

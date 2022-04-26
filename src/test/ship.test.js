@@ -15,14 +15,14 @@ test('Ship hit',() =>{
     expect(destroyer.getHits()).toEqual([])
     destroyer.hit(0,0);
     destroyer.hit(0,1);
-    expect(destroyer.getHits()).toEqual(expect.arrayContaining([[0,0],[0,1]]));
+    expect(destroyer.getHits()).toEqual(expect.arrayContaining(["00", "01"]));
 })
 
 test('Ship sunk',() =>{
     const destroyer = ship(3);
-    destroyer.hit([0,0]);
-    destroyer.hit([0,1]);
-    destroyer.hit([0,2]);
+    destroyer.hit(0,0);
+    destroyer.hit(0,1);
+    destroyer.hit(0,2);
     expect(destroyer.isSunk()).toStrictEqual(true);
 })
 

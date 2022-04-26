@@ -1,9 +1,9 @@
 const shipFactory = (size) =>{
-    hits = [];
+    let hits = [];
     const getSize = () => {return size};
     const getHits = () => {return hits};
     const hit = (row,col) => { 
-        hits.push([row,col]) 
+        hits.push(row.toString() + col.toString()) 
     };
     const isSunk = () => {
         if(hits.length === getSize()) {return true}

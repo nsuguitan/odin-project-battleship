@@ -52,11 +52,11 @@ const gameboardFactory = () => {
             return true;
         }
         else if(missedAttack[row][col] === true ){
-            return "BAR";
+            return false;
         }
         else if(board[row][col]!== null){
             if(board[row][col].getHits().includes(row.toString()+col.toString())){
-                return "FOO";
+                return false;
             }
             else{
             board[row][col].hit(row,col)
