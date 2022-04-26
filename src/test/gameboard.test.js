@@ -104,8 +104,8 @@ test('All ships sunk', () => {
     game.placeShip(s1,0,0,false);
     game.placeShip(s2,1,0,false);
     s1.hit(0,0)
-    s2.hit(1,0)
-    expect(s1.getHits()).toEqual(expect.arrayContaining(["00"]))
-    expect(s2.getHits()).toEqual(expect.arrayContaining(["10"]))
-    expect(game.allSunk()).toEqual(true)
+    expect(s1.isSunk()).toEqual(true)
+    expect(s2.isSunk()).toEqual(false)
+    expect(game.getShips()).toEqual(expect.arrayContaining([s1,s2]))
+    expect(game.allSunk()).toEqual(false)
 })
