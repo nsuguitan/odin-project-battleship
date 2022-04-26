@@ -4,6 +4,7 @@ const gameboardFactory = () => {
     const boardSize = 10;
     let board  = Array(boardSize).fill().map(() => Array(boardSize).fill(null));
     let missedAttack  = Array(boardSize).fill().map(() => Array(boardSize).fill(false));
+    playerShips = [];
     const getMissedAttack = () => missedAttack;
     const getBoard = () => board;
     const placeShip = (myShip,row,col,isVertical) => {
@@ -19,6 +20,7 @@ const gameboardFactory = () => {
                 }
                 
             }
+            playerShips.push(myShip);
             return true;
         }
         else{
@@ -50,18 +52,28 @@ const gameboardFactory = () => {
             return true;
         }
         else if(missedAttack[row][col] === true ){
-            return false;
+            return "BAR";
         }
         else if(board[row][col]!== null){
-            if(board[row][col].getHits().includes((row,col))){
-                return false;
+            if(board[row][col].getHits().includes(row.toString()+col.toString())){
+                return "FOO";
             }
-            board[row][col].hit((row,col))
+            else{
+            board[row][col].hit(row,col)
             return true;
+            }
         }
 
     }
+    const allSunk = () => {
+        playerShips.forEach(ship => {
+            if(!ship.isSunk()){
+                return false;
+            }
+        });
+        return true;
+    }
 
-    return{getBoard, placeShip, validPlacement, getMissedAttack, receiveAttack};
+    return{getBoard, placeShip, validPlacement, getMissedAttack, receiveAttack, allSunk};
 };
 module.exports = gameboardFactory;

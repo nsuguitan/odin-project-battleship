@@ -63,7 +63,7 @@ test(' valid receive attack (trigger hit on ship object)', () => {
     game.placeShip(destroyer,1,3,true);
     game.receiveAttack(2,3);
     expect(game.getMissedAttack()[2][3]).toEqual(false);
-    expect(destroyer.getHits()).toEqual([(2,3)]);
+    expect(destroyer.getHits()).toEqual([[2,3]]);
 
 })
 
@@ -79,6 +79,30 @@ test(' invalid receive attack (already attacked hit)', () => {
     const destroyer =  ship(3);
     game.placeShip(destroyer,1,3,true);
     game.receiveAttack(2,3);
+    expect(destroyer.getHits()).toContainEqual([2,3])
     expect(game.receiveAttack(2,3)).toEqual(false);
 
+})
+
+test('All ships sunk', () => {
+    const game = gameboard();
+    const s1 =  ship(1);
+    const s2 =  ship(1);
+    game.placeShip(s1,0,0,false);
+    game.placeShip(s2,1,0,false);
+    s1.hit((0,0))
+    s2.hit((1,0))
+    expect(game.allSunk()).toEqual(true)
+})
+test('All ships sunk', () => {
+    const game = gameboard();
+    const s1 =  ship(1);
+    const s2 =  ship(1);
+    game.placeShip(s1,0,0,false);
+    game.placeShip(s2,1,0,false);
+    s1.hit((0,0))
+    expect(s1.getHits()).toStrictEqual([[0,0]])
+    expect(s2.getHits()).toEqual([[0,1]])
+    expect(s2.getHits()).toEqual([0])
+    expect(game.allSunk()).toEqual(true)
 })

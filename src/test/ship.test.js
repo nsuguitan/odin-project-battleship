@@ -12,9 +12,10 @@ test('Ship Factory create ship',() =>{
 
 test('Ship hit',() =>{
     const destroyer = ship(3);
-    destroyer.hit(0);
-    destroyer.hit(1);
-    expect(destroyer.getHits()).toStrictEqual([0,1]);
+    expect(destroyer.getHits()).toEqual([])
+    destroyer.hit(0,0);
+    destroyer.hit(0,1);
+    expect(destroyer.getHits()).toEqual(expect.arrayContaining([[0,0],[0,1]]));
 })
 
 test('Ship sunk',() =>{
