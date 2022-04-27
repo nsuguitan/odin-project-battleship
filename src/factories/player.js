@@ -6,8 +6,8 @@ const getPlayerType = () => {
     return playerType;
 }
 
-const takeTurn = (loc) => {
-
+const takeTurn = (row, col, board) => {
+    board.receiveAttack(row,col)
 }
 const computerMove = () => {
 
