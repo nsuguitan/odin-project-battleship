@@ -7,7 +7,12 @@ const getPlayerType = () => {
 }
 
 const takeTurn = (row, col, board) => {
-    board.receiveAttack(row,col)
+    if(board.receiveAttack(row,col)){
+        return true;
+    }
+    else{
+        throw new Error('Wrong move captain! Try again.');
+    }
 }
 const computerMove = () => {
 
