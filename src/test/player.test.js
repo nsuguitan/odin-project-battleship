@@ -12,3 +12,11 @@ test('make legit move', () => {
     p1.takeTurn(0,1, enemyBoard)
     expect(enemyBoard.getMissedAttack()[0][1]).toEqual(true)
 })
+
+test('make illegal move', () => {
+    let p1 = player('Player 1', 'user')
+    let enemyBoard = gameboard()
+    p1.takeTurn(0,1, enemyBoard)
+    expect(p1.takeTurn(0,1, enemyBoard)).toThrow(Error)
+    expect(p1.takeTurn(0,1, enemyBoard)).toThrow("Wrong move captain! Try again.")
+})
