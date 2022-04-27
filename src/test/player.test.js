@@ -24,3 +24,10 @@ test('make illegal move', () => {
         p1.takeTurn(0,1, enemyBoard);
       }).toThrow("Wrong move captain! Try again.")
 })
+
+test('computer move generator', () => {
+    let p2 = player('Player 2', 'computer');
+    let myBoard = gameboard()
+    let coordinates = p2.computerMove(myBoard)
+    expect(p2.takeTurn(coordinates[0],coordinates[1],myBoard)).toBe(true)
+})
