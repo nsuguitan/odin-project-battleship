@@ -1,20 +1,34 @@
+const _ = require("lodash"); 
 const playerFactory = (name, playerType) => {
-const getName = () => {
-    return name;  
-}
-const getPlayerType = () => {
-    return playerType;
-}
+    
+    let computerGuesses = _.shuffle(Array.from(Array(100).keys()));
 
-const takeTurn = (row, col, board) => {
-    if(board.receiveAttack(row,col)){
-        return true;
+    const getName = () => {
+        return name;  
     }
-    else{
-        throw new Error('Wrong move captain! Try again.');
+    const getPlayerType = () => {
+        return playerType;
     }
-}
-const computerMove = () => {
+  
+    const takeTurn = (row, col, board) => {
+        if(board.receiveAttack(row,col)){
+            return true;
+        }
+        else{
+            throw new Error('Wrong move captain! Try again.');
+        }
+    }
+    const computerMove = () => {
+        if(!computerGuesses.length){
+            throw new Error('No more moves');
+        }
+        else{
+            let nextMove = computerGuesses.shift();
+            row = Math.floor((nextMove/10)%10)
+            col = nextMove % 10
+            return [row,col];
+        }
+        
 
 }
 
