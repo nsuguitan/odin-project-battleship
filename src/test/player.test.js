@@ -29,6 +29,5 @@ test('computer move generator', () => {
     let p2 = player('Player 2', 'computer');
     let myBoard = gameboard()
     let coordinates = p2.computerMove()
-    expect(p2.computerMove)
     expect(p2.takeTurn(coordinates[0],coordinates[1],myBoard)).toBe(true)
 })
