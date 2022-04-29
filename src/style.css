@@ -1,3 +1,68 @@
-h1{
+* {
     font-family: 'VT323', monospace;
+    background-color: black;
+    color: white;
+   }
+
+h1{
+    font-size: 100px;
+    color: greenyellow;
 }
+
+h5{
+    color:greenyellow;
+}
+
+.modal{
+    background-color: black;
+    border-color: greenyellow;
+}
+
+.container-fluid{
+    width: 60% !important;
+    float: left;
+}
+.container-ships{
+    width:20%;
+    margin-left: 70%;
+}
+
+.col-xs-1-10,
+.col-sm-1-10 {
+  position: relative;
+  min-height: 1px;
+}
+
+.col-xs-1-10 {
+  width: 10%;
+  float: left;
+  height: 0;
+  padding-bottom: 10%;
+}
+
+.ship-image{
+    -webkit-filter: invert(1);
+   filter: invert(1);
+   background: rgba(0, 0, 0, 0);
+   height: 40px;
+}
+
+#carrier{
+    width: 215px;
+}
+#battleship{
+    width: 170px;
+}
+
+#cruiser{
+    width: 125px;
+}
+
+#submarine{
+    width: 125px;
+}
+
+#destroyer{
+    width: 80px;
+}
+
