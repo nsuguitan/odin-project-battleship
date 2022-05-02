@@ -15,7 +15,7 @@
   \**********************/
 /***/ (() => {
 
-eval("alert(\"Time for battle\");\n\n//# sourceURL=webpack://odin-project-battleship/./src/index.js?");
+eval("$(document).ready(function(){\n    $(\"#placeShipsModal\").modal('show');\n    let carrierDrag = Draggable.create(\"carrier\");\n    console.log('script complete')\n});\n\n\n//# sourceURL=webpack://odin-project-battleship/./src/index.js?");
 
 /***/ })
 
