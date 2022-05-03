@@ -15,7 +15,7 @@
   \**********************/
 /***/ (() => {
 
-eval("$(document).ready(function(){\n    $(\"#placeShipsModal\").modal('show');\n    let carrierDrag = Draggable.create(\"carrier\");\n    console.log('script complete')\n});\n\n\n//# sourceURL=webpack://odin-project-battleship/./src/index.js?");
+eval("gsap.registerPlugin(Draggable);\n\n$(document).ready(function(){\n    $(\"#placeShipsModal\").modal('show');\n    let gridContainer = $(\"#container-grid\")[0];\n    console.log(\"Container info:\", gridContainer);\n    setTimeout(() => {\n    let gridHeight = gridContainer.offsetHeight;\n    let gridWidth = gridContainer.offsetWidth;\n    console.log(\"Height\",gridHeight);\n    console.log(\"Width\",gridWidth);\n    \n    let carrierDrag = Draggable.create(\"#carrier\",{\n        type: \"x,y\",\n        liveSnap:{\n            x: function(endValue) {\n              return Math.round(endValue / (gridWidth/10)) * (gridWidth/10);\n            },\n            y: function(endValue) {\n              return Math.round(endValue / (gridHeight/10)) * (gridHeight/10);\n            },\n          },\n          onDragEnd: function(){Draggable.get('#carrier').applyBounds(document.getElementById('container-grid'))},\n            \n          \n          })\n    }, 300);\n    // let battleshipDrag = Draggable.create(\"#carrier\");\n    // let cruiserDrag = Draggable.create(\"#carrier\");\n    // let submarineDrag = Draggable.create(\"#carrier\");\n    // let destroyerDrag = Draggable.create(\"#carrier\");\n    console.log('script complete')\n});\n\n\n//# sourceURL=webpack://odin-project-battleship/./src/index.js?");
 
 /***/ })
 

@@ -21,10 +21,11 @@ h5{
 .container-fluid{
     width: 60% !important;
     float: left;
+    padding: 0px;
 }
 .container-ships{
     width:20%;
-    margin-left: 70%;
+    margin-left: 67%;
 }
 
 .col-xs-1-10,
