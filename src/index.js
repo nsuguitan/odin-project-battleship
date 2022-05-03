@@ -1,3 +1,6 @@
+import { gsap } from "gsap";
+import { Draggable } from "gsap/Draggable";
+gsap.registerPlugin( CSSPlugin )
 gsap.registerPlugin(Draggable);
 
 $(document).ready(function(){
@@ -20,9 +23,10 @@ $(document).ready(function(){
               return Math.round(endValue / (gridHeight/10)) * (gridHeight/10);
             },
           },
-          onDragEnd: function(){Draggable.get('#carrier').applyBounds(document.getElementById('container-grid'))},
-            
-          
+          onDragEnd: function(){this.applyBounds(document.getElementById('container-grid'))},
+          onClick: function(){
+            gsap.to('#carrier', {transform: "rotate(90deg)"})
+          }  
           })
     }, 300);
     // let battleshipDrag = Draggable.create("#carrier");
