@@ -28,10 +28,69 @@ $(document).ready(function(){
             gsap.to('#carrier', {transform: "rotate(90deg)"})
           }  
           })
+    let battleshipDrag = Draggable.create("#battleship",{
+      type: "x,y",
+      liveSnap:{
+          x: function(endValue) {
+            return Math.round(endValue / (gridWidth/10)) * (gridWidth/10);
+          },
+          y: function(endValue) {
+            return Math.round(endValue / (gridHeight/10)) * (gridHeight/10);
+          },
+        },
+        onDragEnd: function(){this.applyBounds(document.getElementById('container-grid'))},
+        onClick: function(){
+          gsap.to('#battleship', {transform: "rotate(90deg)"})
+        }  
+        });
+    let cruiserDrag = Draggable.create("#cruiser",{
+      type: "x,y",
+      liveSnap:{
+          x: function(endValue) {
+            console.log("x:",endValue);
+            return Math.round(endValue / (gridWidth/10)) * (gridWidth/10);
+          },
+          y: function(endValue) {
+            console.log("y:",endValue);
+            return Math.round(endValue / (gridHeight/10)) * (gridHeight/10);
+          },
+        },
+        onDragEnd: function(){this.applyBounds(document.getElementById('container-grid'))},
+        onClick: function(){
+          gsap.to('#cruiser', {transform: "rotate(90deg)"})
+        }  
+        });
+    let submarineDrag = Draggable.create("#submarine",{
+      type: "x,y",
+      liveSnap:{
+          x: function(endValue) {
+            return Math.round(endValue / (gridWidth/10)) * (gridWidth/10);
+          },
+          y: function(endValue) {
+            return Math.round(endValue / (gridHeight/10)) * (gridHeight/10);
+          },
+        },
+        onDragEnd: function(){this.applyBounds(document.getElementById('container-grid'))},
+        onClick: function(){
+          gsap.to('#submarine', {transform: "rotate(90deg)"})
+        }  
+        });
+        let destroyerDrag = Draggable.create("#destroyer",{
+          type: "x,y",
+          liveSnap:{
+              x: function(endValue) {
+                return Math.round(endValue / (gridWidth/10)) * (gridWidth/10);
+              },
+              y: function(endValue) {
+                return Math.round(endValue / (gridHeight/10)) * (gridHeight/10);
+              },
+            },
+            onDragEnd: function(){this.applyBounds(document.getElementById('container-grid'))},
+            onClick: function(){
+              gsap.to('#destroyer', {transform: "rotate(90deg)"})
+            }  
+            });
     }, 300);
-    // let battleshipDrag = Draggable.create("#carrier");
-    // let cruiserDrag = Draggable.create("#carrier");
-    // let submarineDrag = Draggable.create("#carrier");
-    // let destroyerDrag = Draggable.create("#carrier");
+
     console.log('script complete')
 });
