@@ -87,7 +87,8 @@ $(document).ready(function(){
             },
             onDragEnd: function(){this.applyBounds(document.getElementById('container-grid'))},
             onClick: function(){
-              gsap.to('#destroyer', {transform: "rotate(90deg)"})
+              let temp = document.getElementById('destroyer').style.transform + "rotate(90deg)"
+              gsap.to('#destroyer', {transform: temp})
             }  
             });
     }, 300);

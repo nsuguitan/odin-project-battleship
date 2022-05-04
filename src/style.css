@@ -19,7 +19,8 @@ h5{
 }
 
 .container-fluid{
-    width: 60% !important;
+    width: 460px !important;
+    height: 480px !important;
     float: left;
     padding: 0px;
 }
@@ -65,5 +66,13 @@ h5{
 
 #destroyer{
     width: 80px;
+}
+
+.ship-even-long{
+    transform-origin: 37.5%;
+}
+
+.ship-even-short{
+    transform-origin: 25%;
 }
 
