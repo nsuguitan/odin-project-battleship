@@ -23,7 +23,7 @@ $(document).ready(function(){
               return Math.round(endValue / (gridHeight/10)) * (gridHeight/10);
             },
           },
-          onDragEnd: function(){this.applyBounds(document.getElementById('container-grid'))},
+          onDragEnd: function(){this.applyBounds(document.getElementById('container-grid')); shipStartLocation("carrier");},
           onClick: function(){
             gsap.to('#carrier', {transform: "rotate(90deg)"})
           }  
@@ -47,11 +47,9 @@ $(document).ready(function(){
       type: "x,y",
       liveSnap:{
           x: function(endValue) {
-            console.log("x:",endValue);
             return Math.round(endValue / (gridWidth/10)) * (gridWidth/10);
           },
           y: function(endValue) {
-            console.log("y:",endValue);
             return Math.round(endValue / (gridHeight/10)) * (gridHeight/10);
           },
         },
@@ -85,13 +83,36 @@ $(document).ready(function(){
                 return Math.round(endValue / (gridHeight/10)) * (gridHeight/10);
               },
             },
-            onDragEnd: function(){this.applyBounds(document.getElementById('container-grid'))},
+            onDragEnd: function(){this.applyBounds(document.getElementById('container-grid')); shipStartLocation("destroyer");},
             onClick: function(){
-              let temp = document.getElementById('destroyer').style.transform + "rotate(90deg)"
-              gsap.to('#destroyer', {transform: temp})
+              //let temp = document.getElementById('destroyer').style.transform + "rotate(90deg)"
+              gsap.to('#destroyer', {transform: "rotate(90deg)"})
             }  
             });
     }, 300);
+
+    function shipStartLocation(shipId){
+      let shipImage = document.getElementById(shipId);
+      let gridImage = document.getElementById("container-grid")
+      let gridRect = gridImage.getBoundingClientRect();
+      let shipRect = shipImage.getBoundingClientRect();
+      let originX = gridRect.left;
+      let originY = gridRect.top;
+      let cx = shipRect.left;
+      let cy = shipRect.top - 5;
+      let gx = Math.round((cx- originX)/46)
+      let gy = Math.round((cy- originY)/48)
+      console.log(shipId + " x:"+ cx)
+      console.log(shipId+ " y:"+ cy)
+      console.log(" Grid (x,y): ("+ originX + ", " + originY + ")")
+      console.log(shipId + " (x,y): ("+ gx + ", " + gy + ")")
+
+    }
+
+    function secureShips(){
+
+    }
+
 
     console.log('script complete')
 });
