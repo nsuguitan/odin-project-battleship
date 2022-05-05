@@ -51,21 +51,26 @@ h5{
 
 #carrier{
     width: 215px;
+    transform: rotate(0deg);
 }
 #battleship{
     width: 170px;
+    transform: rotate(0deg);
 }
 
 #cruiser{
     width: 125px;
+    transform: rotate(0deg);
 }
 
 #submarine{
     width: 125px;
+    transform: rotate(0deg);
 }
 
 #destroyer{
     width: 80px;
+    transform: rotate(0deg);
 }
 
 .ship-even-long{
