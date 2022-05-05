@@ -125,26 +125,32 @@ $(document).ready(function(){
       //Human Player board generation
       const myBoard = gameboardFactory()
       const myCarrier = shipFactory(5)
-
-      let [cRow, cCol] = shipStartLocation("carrier")
-      console.log("coords:",[cRow, cCol])
-      let carrierTransformString = '' + document.getElementById("carrier").style.transform
-      console.log("Transform string: ", carrierTransformString)
-      let rotation = carrierTransformString.match(/rotate\(\d+deg\)/i);
-      console.log("carrier rotation: ", rotation)
-      if (rotation && rotation[0] === 'rotate(90deg)'){
-        myBoard.placeShip(myCarrier,cRow, cCol, true)
-        console.log("-------- Vert INFO------")
-        console.table(myBoard.getBoard())
-        console.table(myBoard.getShips())
+      const myBattleship = shipFactory(4)
+      const myCruiser = shipFactory(3)
+      const mySubmarine = shipFactory(3)
+      const myDestroyer = shipFactory(2)
+      let shipList = [myCarrier, myBattleship, myCruiser, mySubmarine, myDestroyer]
+      let shipIds = ["carrier", "battleship", "cruiser", "submarine", "destroyer"]
+      for (let i = 0; i < shipList.length; i++){
+        let [row, col] = shipStartLocation(shipIds[i])
+        console.log("coords:",[row, col])
+        let transformString = '' + document.getElementById(shipIds[i]).style.transform
+        console.log("Transform string: ", transformString)
+        let rotation = transformString.match(/rotate\(\d+deg\)/i);
+        console.log(shipIds[0] + " rotation: "+ rotation)
+        if (rotation && rotation[0] === 'rotate(90deg)'){
+          myBoard.placeShip(shipList[i],row, col, true)
+          console.log("-------- Vert INFO------")
+          console.table(myBoard.getBoard())
+          console.table(myBoard.getShips())
+        }
+        else{
+          myBoard.placeShip(shipList[i],row, col, false)
+          console.log("-------- Horizontal INFO------")
+          console.table(myBoard.getBoard())
+          console.table(myBoard.getShips())
+        }
       }
-      else{
-        myBoard.placeShip(myCarrier,cRow, cCol, false)
-        console.log("-------- Horizontal INFO------")
-        console.table(myBoard.getBoard())
-        console.table(myBoard.getShips())
-      }
-      
 
     }
 

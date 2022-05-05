@@ -31,7 +31,7 @@ const gameboardFactory = () => {
         
     const validPlacement = (size,row,col,isVertical) => {
         //check out of bounds
-        if((row + size >= boardSize && isVertical === true) || (col + size >= boardSize && isVertical === false)){return false;}
+        if((row + size > boardSize && isVertical === true) || (col + size > boardSize && isVertical === false)){return false;}
         //check collision
         for (i=0; i < size; i++){
             if(isVertical){
