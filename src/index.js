@@ -98,107 +98,147 @@ $(document).ready(function(){
             }  
             });
       document.getElementById("start-button").addEventListener("click", function(){
-        secureShips();
-        $('#placeShipsModal').modal('hide')});
+      play();
+      })
+          
+    }, 300);
+  
+    let play = () =>{
 
+      secureShips();
+      $('#placeShipsModal').modal('hide');
+      placeComputerShips();
+
+      initGrids();
+      showPlayerShips();
+
+      //FUNCTIONS
+
+      function shipStartLocation(shipId){
+        let shipImage = document.getElementById(shipId);
+        let gridImage = document.getElementById("container-grid")
+        let gridRect = gridImage.getBoundingClientRect();
+        let shipRect = shipImage.getBoundingClientRect();
+        let originX = gridRect.left;
+        let originY = gridRect.top;
+        let cx = shipRect.left;
+        let cy = shipRect.top - 5;
+        let gx = Math.round((cx- originX)/46)
+        let gy = Math.round((cy- originY)/48)
+        console.log(shipId + " x:"+ cx)
+        console.log(shipId+ " y:"+ cy)
+        console.log(" Grid (x,y): ("+ originX + ", " + originY + ")")
+        console.log(shipId + " (x,y): ("+ gx + ", " + gy + ")")
+        //y-axis location is the row, x-axis location is column
+        return[gy,gx]
+
+      }
+
+      function secureShips(){
+        console.log("Start Button Clicked --- let's goooooo!")
+        //Human Player board generation
+        const myBoard = gameboardFactory()
+        const myCarrier = shipFactory(5)
+        const myBattleship = shipFactory(4)
+        const myCruiser = shipFactory(3)
+        const mySubmarine = shipFactory(3)
+        const myDestroyer = shipFactory(2)
+        let shipList = [myCarrier, myBattleship, myCruiser, mySubmarine, myDestroyer]
+        let shipIds = ["carrier", "battleship", "cruiser", "submarine", "destroyer"]
+        for (let i = 0; i < shipList.length; i++){
+          let [row, col] = shipStartLocation(shipIds[i])
+          console.log("coords:",[row, col])
+          let transformString = '' + document.getElementById(shipIds[i]).style.transform
+          console.log("Transform string: ", transformString)
+          let rotation = transformString.match(/rotate\(\d+deg\)/i);
+          console.log(shipIds[0] + " rotation: "+ rotation)
+          if (rotation && rotation[0] === 'rotate(90deg)'){
+            myBoard.placeShip(shipList[i],row, col, true)
+            console.log("-------- Vert INFO------")
+            console.table(myBoard.getBoard())
+            console.table(myBoard.getShips())
+          }
+          else{
+            myBoard.placeShip(shipList[i],row, col, false)
+            console.log("-------- Horizontal INFO------")
+            console.table(myBoard.getBoard())
+            console.table(myBoard.getShips())
+          }
+        }
+
+      }
+
+      function placeComputerShips(){
+        const compBoard = gameboardFactory()
+        const compCarrier = shipFactory(5)
+        const compBattleship = shipFactory(4)
+        const compCruiser = shipFactory(3)
+        const compSubmarine = shipFactory(3)
+        const compDestroyer = shipFactory(2)
+        let shipList = [compCarrier, compBattleship, compCruiser, compSubmarine, compDestroyer]
+        for (let i = 0; i < shipList.length; i++){
+          while(true){
+            let row = Math.floor(Math.random() * 10)
+            let col = Math.floor(Math.random() * 10)
+            var isVertical = Math.random() < 0.5;
+            if(compBoard.placeShip(shipList[i],row, col, isVertical)){break;}
+          }
+        }
+        console.log("-------- COMPUTER BOARD INFO------")
+        console.table(compBoard.getBoard())
+        console.table(compBoard.getShips())
+      }
+      
+
+      function createPlayerGrid( rows, cols ){
+        var i=0;
+        var grid = document.createElement('table');
+        grid.className = 'grid';
+        for (var r=0;r<rows;++r){
+            var tr = grid.appendChild(document.createElement('tr'));
+            for (var c=0;c<cols;++c){
+                var cell = tr.appendChild(document.createElement('td'));
+                cell.innerHTML = ++i;
+            }
+        }
+        return grid;
+      }
+
+      function createComputerGrid(rows, cols, callback){
+        var i=0;
+        var grid = document.createElement('table');
+        grid.className = 'grid';
+        for (var r=0;r<rows;++r){
+            var tr = grid.appendChild(document.createElement('tr'));
+            for (var c=0;c<cols;++c){
+                var cell = tr.appendChild(document.createElement('td'));
+                cell.innerHTML = ++i;
+                cell.addEventListener('click',(function(r,c,i){
+                    return function(){
+                        callback(r,c,i);
+                    }
+                })(cell,r,c,i),false);
+            }
+        }
+        return grid;
+      }
+    
+      function initGrids(){
         let playerGrid = createPlayerGrid(10,10)
 
-        let computerGrid = createComputerGrid(10,10,function(el,row,col,i){
-          console.log("You clicked on element:",el);
-          console.log("You clicked on row:",row);
-          console.log("You clicked on col:",col);
-          console.log("You clicked on item #:",i);
-        });
+        let computerGrid = createComputerGrid(10,10,function(row,col,i){
+            // console.log("You clicked on row:",row);
+            // console.log("You clicked on col:",col);
+            // console.log("You clicked on item #:",i);
+
+          });
         document.getElementById('player-board').appendChild(playerGrid); 
-        document.getElementById('computer-board').appendChild(computerGrid);  
-    }, 300);
+        document.getElementById('computer-board').appendChild(computerGrid);
 
-    function shipStartLocation(shipId){
-      let shipImage = document.getElementById(shipId);
-      let gridImage = document.getElementById("container-grid")
-      let gridRect = gridImage.getBoundingClientRect();
-      let shipRect = shipImage.getBoundingClientRect();
-      let originX = gridRect.left;
-      let originY = gridRect.top;
-      let cx = shipRect.left;
-      let cy = shipRect.top - 5;
-      let gx = Math.round((cx- originX)/46)
-      let gy = Math.round((cy- originY)/48)
-      console.log(shipId + " x:"+ cx)
-      console.log(shipId+ " y:"+ cy)
-      console.log(" Grid (x,y): ("+ originX + ", " + originY + ")")
-      console.log(shipId + " (x,y): ("+ gx + ", " + gy + ")")
-      //y-axis location is the row, x-axis location is column
-      return[gy,gx]
-
-    }
-
-    function secureShips(){
-      console.log("Start Button Clicked --- let's goooooo!")
-      //Human Player board generation
-      const myBoard = gameboardFactory()
-      const myCarrier = shipFactory(5)
-      const myBattleship = shipFactory(4)
-      const myCruiser = shipFactory(3)
-      const mySubmarine = shipFactory(3)
-      const myDestroyer = shipFactory(2)
-      let shipList = [myCarrier, myBattleship, myCruiser, mySubmarine, myDestroyer]
-      let shipIds = ["carrier", "battleship", "cruiser", "submarine", "destroyer"]
-      for (let i = 0; i < shipList.length; i++){
-        let [row, col] = shipStartLocation(shipIds[i])
-        console.log("coords:",[row, col])
-        let transformString = '' + document.getElementById(shipIds[i]).style.transform
-        console.log("Transform string: ", transformString)
-        let rotation = transformString.match(/rotate\(\d+deg\)/i);
-        console.log(shipIds[0] + " rotation: "+ rotation)
-        if (rotation && rotation[0] === 'rotate(90deg)'){
-          myBoard.placeShip(shipList[i],row, col, true)
-          console.log("-------- Vert INFO------")
-          console.table(myBoard.getBoard())
-          console.table(myBoard.getShips())
-        }
-        else{
-          myBoard.placeShip(shipList[i],row, col, false)
-          console.log("-------- Horizontal INFO------")
-          console.table(myBoard.getBoard())
-          console.table(myBoard.getShips())
-        }
+        
       }
 
-    }
-
-    function createPlayerGrid( rows, cols ){
-      var i=0;
-      var grid = document.createElement('table');
-      grid.className = 'grid';
-      for (var r=0;r<rows;++r){
-          var tr = grid.appendChild(document.createElement('tr'));
-          for (var c=0;c<cols;++c){
-              var cell = tr.appendChild(document.createElement('td'));
-              cell.innerHTML = ++i;
-          }
-      }
-      return grid;
-    }
-
-    function createComputerGrid( rows, cols, callback){
-      var i=0;
-      var grid = document.createElement('table');
-      grid.className = 'grid';
-      for (var r=0;r<rows;++r){
-          var tr = grid.appendChild(document.createElement('tr'));
-          for (var c=0;c<cols;++c){
-              var cell = tr.appendChild(document.createElement('td'));
-              cell.innerHTML = ++i;
-              cell.addEventListener('click',(function(el,r,c,i){
-                  return function(){
-                      callback(el,r,c,i);
-                  }
-              })(cell,r,c,i),false);
-          }
-      }
-      return grid;
-    }
+    };
 
 
     console.log('script complete')
