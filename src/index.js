@@ -6,6 +6,7 @@ import "./factories/gameboard.js";
 import gameboardFactory from "./factories/gameboard.js";
 import shipFactory from "./factories/ship.js";
 import { _colorStringFilter } from "gsap/gsap-core";
+import playerFactory from "./factories/player.js";
 
 
 gsap.registerPlugin( CSSPlugin )
@@ -105,12 +106,13 @@ $(document).ready(function(){
   
     let play = () =>{
 
-      secureShips();
+      let myBoard = secureShips();
       $('#placeShipsModal').modal('hide');
-      placeComputerShips();
-
-      initGrids();
-      showPlayerShips();
+      let compBoard = placeComputerShips();
+      let player = playerFactory("You", "player")
+      let computer = playerFactory("The Enemy", "computer")
+      initGrids(myBoard,compBoard);
+      //showPlayerShips();
 
       //FUNCTIONS
 
@@ -165,6 +167,7 @@ $(document).ready(function(){
             console.table(myBoard.getShips())
           }
         }
+        return myBoard;
 
       }
 
@@ -184,21 +187,31 @@ $(document).ready(function(){
             if(compBoard.placeShip(shipList[i],row, col, isVertical)){break;}
           }
         }
-        console.log("-------- COMPUTER BOARD INFO------")
-        console.table(compBoard.getBoard())
-        console.table(compBoard.getShips())
+        console.log("-------- COMPUTER BOARD INFO------");
+        console.table(compBoard.getBoard());
+        console.table(compBoard.getShips());
+        return compBoard;
       }
       
 
-      function createPlayerGrid( rows, cols ){
+      function createPlayerGrid( rows, cols, myBoard ){
         var i=0;
         var grid = document.createElement('table');
         grid.className = 'grid';
         for (var r=0;r<rows;++r){
             var tr = grid.appendChild(document.createElement('tr'));
             for (var c=0;c<cols;++c){
+              if(myBoard.getBoard()[r][c] !== null){
+                var td = document.createElement('td')
+                td.style.backgroundColor = "greenyellow"
+                var cell = tr.appendChild(td);
+                
+              }
+              else{
                 var cell = tr.appendChild(document.createElement('td'));
-                cell.innerHTML = ++i;
+              }
+                
+                
             }
         }
         return grid;
@@ -217,26 +230,49 @@ $(document).ready(function(){
                     return function(){
                         callback(r,c,i);
                     }
-                })(cell,r,c,i),false);
+                })(r,c,i),false);
             }
         }
         return grid;
       }
     
-      function initGrids(){
-        let playerGrid = createPlayerGrid(10,10)
+      function initGrids(myBoard,compBoard){
+        console.log("--------------------------------------")
+        console.table(myBoard)
+        console.log("--------------------------------------")
+        let playerGrid = createPlayerGrid(10,10, myBoard);
+        
 
         let computerGrid = createComputerGrid(10,10,function(row,col,i){
+              console.log("Row clicked: "+row+" Column Clicked: "+col)
+              console.table(compBoard)
+              console.log("--------------------------------------")
+              player.takeTurn(row,col,compBoard)
+              if(checkWin(compBoard)){alert(player.getName()+" won!")}
+              let compMove = computer.computerMove()
+              computer.takeTurn(compMove[0],compMove[1],myBoard)
+              console.log("----------------COMP BOARD INFO----------------")
+              console.table(compBoard.getBoard());
+              console.table(compBoard.getShips());
+              if(checkWin(myBoard)){alert(computer.getName()+" won!")}
+          });
             // console.log("You clicked on row:",row);
             // console.log("You clicked on col:",col);
             // console.log("You clicked on item #:",i);
-
-          });
         document.getElementById('player-board').appendChild(playerGrid); 
-        document.getElementById('computer-board').appendChild(computerGrid);
+        document.getElementById('computer-board').appendChild(computerGrid); 
 
-        
       }
+
+      function checkWin(theBoard){
+        if(theBoard.allSunk()){return true}
+        else{return false}
+      }
+
+      // function showPlayerShips(){
+
+      // }
+      
 
     };
 
