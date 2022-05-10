@@ -205,12 +205,13 @@ $(document).ready(function(){
                 var td = document.createElement('td')
                 td.style.backgroundColor = "greenyellow"
                 var cell = tr.appendChild(td);
-                
+                            
               }
               else{
                 var cell = tr.appendChild(document.createElement('td'));
               }
-                
+              cell.id = "P"+r+c  
+              i++;  
                 
             }
         }
@@ -225,7 +226,8 @@ $(document).ready(function(){
             var tr = grid.appendChild(document.createElement('tr'));
             for (var c=0;c<cols;++c){
                 var cell = tr.appendChild(document.createElement('td'));
-                cell.innerHTML = ++i;
+                cell.id = "CP"+r+c
+                i++;
                 cell.addEventListener('click',(function(r,c,i){
                     return function(){
                         callback(r,c,i);
@@ -248,9 +250,12 @@ $(document).ready(function(){
               console.table(compBoard)
               console.log("--------------------------------------")
               player.takeTurn(row,col,compBoard)
+              updateGrid(compBoard,"CP"+row+col, row, col)
               if(checkWin(compBoard)){alert(player.getName()+" won!")}
               let compMove = computer.computerMove()
               computer.takeTurn(compMove[0],compMove[1],myBoard)
+              console.log("The computer move: P"+compMove[0]+compMove[1])
+              updateGrid(myBoard,"P"+compMove[0]+compMove[1], compMove[0], compMove[1])
               console.log("----------------COMP BOARD INFO----------------")
               console.table(compBoard.getBoard());
               console.table(compBoard.getShips());
@@ -267,6 +272,16 @@ $(document).ready(function(){
       function checkWin(theBoard){
         if(theBoard.allSunk()){return true}
         else{return false}
+      }
+
+      function updateGrid(board, id, row, col){
+        let cell = document.getElementById(id);
+        if (board.getBoard()[row][col] === null){
+          cell.style.backgroundColor = "blue";
+        }
+        else{
+          cell.style.backgroundColor = "red";
+        }
       }
 
       // function showPlayerShips(){
